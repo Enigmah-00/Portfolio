@@ -9,31 +9,24 @@ function Socials() {
   const socials = [
     {
       name: 'Facebook',
-      icon: '📘',
+      icon: 'ⓕ',
       url: 'https://www.facebook.com/mahdi.hasan.qurishi/',
       color: '#1877f2',
       description: 'Connect with me on Facebook'
     },
     {
       name: 'LinkedIn',
-      icon: '💼',
+      icon: 'in',
       url: 'https://www.linkedin.com/in/mahdi-hasan-qurishi-42ba89318/',
       color: '#0077b5',
       description: 'View my professional profile'
     },
     {
-      name: 'GitHub',
-      icon: '💻',
-      url: 'https://github.com/Enigmah-00',
-      color: '#00ffcc',
-      description: 'Check out my code repositories'
-    },
-    {
-      name: 'Codeforces',
-      icon: '🏅',
-      url: 'https://codeforces.com/profile/ENIGMAH',
-      color: '#ff6b6b',
-      description: 'Follow my competitive programming journey'
+      name: 'WhatsApp',
+      icon: '�',
+      url: 'https://wa.me/8801964281241',
+      color: '#25D366',
+      description: 'Chat with me on WhatsApp'
     }
   ];
 
