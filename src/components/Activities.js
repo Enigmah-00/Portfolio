@@ -26,6 +26,12 @@ function Activities() {
       color: '#ff6b6b'
     },
     {
+      icon: '📖',
+      title: 'Avid Reader & Book Collector',
+      description: 'I read varieties of books, novels by Humayun Ahmed and Islamic Books by Arif Azad are my favourite. I have a hobby of collecting books too',
+      color: '#9b59b6'
+    },
+    {
       icon: '♟️',
       title: 'Chess Enthusiast',
       description: 'Apart from programming, I enjoy playing chess online to sharpen strategic thinking',
