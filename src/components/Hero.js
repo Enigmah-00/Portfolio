@@ -26,7 +26,7 @@ function Hero() {
 
   const links = [
     { name: 'Codeforces', url: 'https://codeforces.com/profile/ENIGMAH' },
-    { name: 'CodeChef', url: 'https://www.codechef.com/users/disaster_101' },
+    { name: 'CodeChef', url: 'https://www.codechef.com/users/disaster101' },
     { name: 'AtCoder', url: 'https://atcoder.jp/users/enigmah_00' },
     { name: 'GitHub', url: 'https://github.com/Enigmah-00' }
   ];
