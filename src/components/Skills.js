@@ -4,18 +4,18 @@ import useSound from '../hooks/useSound';
 import './Skills.css';
 
 function Skills() {
-  const [hoveredSkill, setHoveredSkill] = useState(null);
+  const [, setHoveredSkill] = useState(null);
   const playSound = useSound();
 
   const skills = [
-    { name: 'C / C++', level: 90, color: '#00a8cc' },
-    { name: 'Java', level: 60, color: '#ff6b6b' },
-    { name: 'Kotlin', level: 30, color: '#a55eea' },
-    { name: 'HTML / CSS', level: 90, color: '#48dbfb' },
-    { name: 'Python', level: 50, color: '#feca57' },
-    { name: 'Prompt Engineering', level: 70, color: '#1dd1a1' },
-    { name: 'Web Development', level: 10, color: '#ff9ff3' },
-    { name: 'Managing Skill', level: 100, color: '#00ffcc', special: true }
+    { name: 'C / C++', color: '#00a8cc', icon: '©️' },
+    { name: 'Java', color: '#ff6b6b', icon: '☕' },
+    { name: 'Kotlin', color: '#a55eea', icon: '🅺' },
+    { name: 'HTML / CSS', color: '#48dbfb', icon: '🎨' },
+    { name: 'Python', color: '#feca57', icon: '🐍' },
+    { name: 'Prompt Engineering', color: '#1dd1a1', icon: '🤖' },
+    { name: 'Web Development', color: '#ff9ff3', icon: '💻' },
+    { name: 'Managing Skill', color: '#00ffcc', icon: '👔' }
   ];
 
   return (
@@ -35,41 +35,38 @@ function Skills() {
         >
           Skills
         </motion.h2>
-        <ul className="skills-list">
+        <div className="skills-grid">
           {skills.map((skill, index) => (
-            <motion.li
+            <motion.div
               key={index}
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
+              className="skill-box"
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
               onMouseEnter={() => {
                 setHoveredSkill(index);
                 playSound('hover');
               }}
               onMouseLeave={() => setHoveredSkill(null)}
-              className={hoveredSkill === index ? 'hovered' : ''}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: `0 10px 40px ${skill.color}60`,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                borderColor: skill.color,
+                background: `linear-gradient(135deg, ${skill.color}15, transparent)`
+              }}
             >
-              <span className="skill-name">{skill.name}</span>
-              <div className="skill-bar">
-                <motion.div 
-                  className="skill-level"
-                  style={{ 
-                    backgroundColor: skill.color,
-                    boxShadow: `0 0 20px ${skill.color}80`
-                  }}
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: index * 0.1 }}
-                />
-                <span className="skill-percentage">
-                  {skill.special ? '∞' : `${skill.level}%`}
-                </span>
-              </div>
-            </motion.li>
+              <span className="skill-icon">{skill.icon}</span>
+              <span className="skill-name" style={{ color: skill.color }}>
+                {skill.name}
+              </span>
+            </motion.div>
           ))}
-        </ul>
+        </div>
       </div>
     </motion.section>
   );
