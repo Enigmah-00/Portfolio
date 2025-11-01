@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Footer.css';
 
 function Footer() {
+  const playSound = useSound();
   return (
     <motion.footer 
       className="footer"
@@ -18,6 +20,8 @@ function Footer() {
       >
         Connect: <motion.a 
           href="mailto:mahdiqureshi9@gmail.com"
+          onMouseEnter={() => playSound('hover')}
+          onClick={() => playSound('click')}
           whileHover={{ 
             color: "#00ffcc",
             textShadow: "0 0 10px rgba(0, 255, 204, 0.8)"

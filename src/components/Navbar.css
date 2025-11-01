@@ -8,6 +8,9 @@
   padding: 20px 40px;
   z-index: 1000;
   transition: all 0.3s ease;
+  will-change: background, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .navbar.scrolled {
@@ -34,6 +37,8 @@
   font-size: 14px;
   transition: all 0.3s ease;
   box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+  will-change: transform, background, box-shadow;
+  transform: translateZ(0);
 }
 
 .nav-link:hover {

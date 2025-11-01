@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Achievements.css';
 
 function Achievements() {
+  const playSound = useSound();
   const achievements = [
     {
       icon: '🌟',
@@ -16,14 +18,16 @@ function Achievements() {
       title: 'NASA Space Apps Hackathon',
       description: 'Participated in the global NASA Space Apps Challenge hackathon',
       color: '#0B3D91',
-      certificate: true
+      certificate: true,
+      certificateLink: '/NASA SPACE.pdf'
     },
     {
       icon: '📡',
       title: 'Ericsson Edge Academia',
       description: 'Successfully completed Ericsson Edge Academia certification program',
       color: '#0082E6',
-      certificate: true
+      certificate: true,
+      certificateLink: '/Ericsson.pdf'
     }
   ];
 
@@ -31,16 +35,16 @@ function Achievements() {
     <motion.section 
       className="achievements-section section" 
       id="achievements"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container">
         <motion.h2
-          initial={{ x: -50, opacity: 0 }}
+          initial={{ x: -30, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           Achievements & Certifications
         </motion.h2>
@@ -50,13 +54,14 @@ function Achievements() {
             <motion.div
               key={index}
               className={`achievement-card ${achievement.highlight ? 'highlight' : ''}`}
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
+              transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
               whileHover={{ 
                 scale: 1.05,
-                boxShadow: `0 15px 50px ${achievement.color}40`
+                boxShadow: `0 15px 50px ${achievement.color}40`,
+                transition: { duration: 0.2 }
               }}
             >
               <div 
@@ -68,9 +73,18 @@ function Achievements() {
               <h3 style={{ color: achievement.color }}>{achievement.title}</h3>
               <p>{achievement.description}</p>
               {achievement.certificate && (
-                <div className="certificate-badge">
-                  📜 Certified
-                </div>
+                <motion.a
+                  href={achievement.certificateLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="certificate-badge clickable"
+                  onClick={() => playSound('click')}
+                  onMouseEnter={() => playSound('hover')}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  📜 View Certificate
+                </motion.a>
               )}
             </motion.div>
           ))}

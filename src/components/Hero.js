@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Hero.css';
 
 function Hero() {
+  const playSound = useSound();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -76,6 +78,8 @@ function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 variants={itemVariants}
+                onMouseEnter={() => playSound('hover')}
+                onClick={() => playSound('click')}
                 whileHover={{ 
                   scale: 1.1,
                   boxShadow: "0 0 25px rgba(0, 255, 204, 0.6)"

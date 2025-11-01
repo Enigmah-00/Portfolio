@@ -1,22 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Stats.css';
 
 function Stats() {
   const [cfData, setCfData] = useState(null);
+  const [problemCount, setProblemCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const playSound = useSound();
 
   useEffect(() => {
     const fetchCodeforcesData = async () => {
       try {
-        const response = await fetch('https://codeforces.com/api/user.info?handles=ENIGMAH');
-        const data = await response.json();
+        // Fetch user info
+        const userResponse = await fetch('https://codeforces.com/api/user.info?handles=ENIGMAH');
+        const userData = await userResponse.json();
         
-        if (data.status === 'OK') {
-          setCfData(data.result[0]);
+        if (userData.status === 'OK') {
+          setCfData(userData.result[0]);
         } else {
           setError('Failed to fetch data');
+        }
+
+        // Fetch user submissions to count solved problems
+        const submissionsResponse = await fetch('https://codeforces.com/api/user.status?handle=ENIGMAH&from=1&count=10000');
+        const submissionsData = await submissionsResponse.json();
+        
+        if (submissionsData.status === 'OK') {
+          // Get unique problems that were solved (verdict === 'OK')
+          const solvedProblems = new Set();
+          submissionsData.result.forEach(submission => {
+            if (submission.verdict === 'OK') {
+              const problemId = `${submission.problem.contestId}-${submission.problem.index}`;
+              solvedProblems.add(problemId);
+            }
+          });
+          setProblemCount(solvedProblems.size);
         }
       } catch (err) {
         setError('Error fetching Codeforces data');
@@ -49,16 +69,16 @@ function Stats() {
     <motion.section 
       className="stats-section section" 
       id="stats"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container">
         <motion.h2
-          initial={{ x: -50, opacity: 0 }}
+          initial={{ x: -30, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           Competitive Programming Stats
         </motion.h2>
@@ -71,11 +91,11 @@ function Stats() {
           <div className="stats-grid">
             <motion.div 
               className="stat-card"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)", transition: { duration: 0.2 } }}
             >
               <div className="stat-icon">🏆</div>
               <div className="stat-label">Rank</div>
@@ -89,24 +109,24 @@ function Stats() {
 
             <motion.div 
               className="stat-card"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)" }}
+              transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)", transition: { duration: 0.2 } }}
             >
               <div className="stat-icon">⭐</div>
               <div className="stat-label">Rating</div>
               <div className="stat-value">{cfData.rating || 'N/A'}</div>
             </motion.div>
 
-            <motion.div 
+                        <motion.div 
               className="stat-card"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)" }}
+              transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)", transition: { duration: 0.2 } }}
             >
               <div className="stat-icon">📈</div>
               <div className="stat-label">Max Rating</div>
@@ -115,15 +135,15 @@ function Stats() {
 
             <motion.div 
               className="stat-card"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)" }}
+              transition={{ duration: 0.3, delay: 0.15, ease: "easeOut" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)", transition: { duration: 0.2 } }}
             >
-              <div className="stat-icon">💻</div>
-              <div className="stat-label">Contribution</div>
-              <div className="stat-value">{cfData.contribution || 0}</div>
+              <div className="stat-icon">✅</div>
+              <div className="stat-label">Problems Solved</div>
+              <div className="stat-value">{problemCount || 'N/A'}</div>
             </motion.div>
           </div>
         ) : null}
@@ -139,6 +159,8 @@ function Stats() {
             target="_blank" 
             rel="noopener noreferrer"
             className="profile-link"
+            onMouseEnter={() => playSound('hover')}
+            onClick={() => playSound('click')}
           >
             View Full Profile →
           </a>

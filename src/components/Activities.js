@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Activities.css';
 
 function Activities() {
+  const playSound = useSound();
   return (
     <motion.section 
       className="activities-section section" 
@@ -39,6 +41,8 @@ function Activities() {
               href="https://www.chess.com/member/enigmah_00"
               target="_blank"
               rel="noopener noreferrer"
+              onMouseEnter={() => playSound('hover')}
+              onClick={() => playSound('click')}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >

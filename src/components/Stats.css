@@ -38,6 +38,9 @@
   text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .stat-icon {

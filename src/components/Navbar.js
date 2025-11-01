@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Navbar.css';
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
+  const playSound = useSound();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +31,7 @@ function Navbar() {
   }, []);
 
   const scrollToSection = (sectionId) => {
+    playSound('click');
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -48,6 +51,7 @@ function Navbar() {
             key={section}
             className={`nav-link ${activeSection === section ? 'active' : ''}`}
             onClick={() => scrollToSection(section)}
+            onMouseEnter={() => playSound('hover')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

@@ -1,8 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Projects.css';
 
 function Projects() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const playSound = useSound();
+
   const projects = [
     {
       title: 'ScanShot',
@@ -34,64 +38,82 @@ function Projects() {
     }
   ];
 
+  // Auto-slide effect - change every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [projects.length]);
+
+  const goToSlide = (index) => {
+    playSound('click');
+    setCurrentIndex(index);
+  };
+
   return (
     <motion.section 
       className="projects-section section" 
       id="projects"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container">
         <motion.h2
-          initial={{ x: -50, opacity: 0 }}
+          initial={{ x: -30, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           Projects
         </motion.h2>
         
-        <div className="projects-grid">
-          {projects.map((project, index) => (
+        <div className="carousel-container">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
-              key={index}
+              key={currentIndex}
               className="project-card"
-              initial={{ scale: 0.9, opacity: 0, y: 30 }}
-              whileInView={{ scale: 1, opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 15px 50px rgba(0, 255, 204, 0.3)"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ 
+                duration: 0.4,
+                ease: [0.43, 0.13, 0.23, 0.96],
+                opacity: { duration: 0.4 }
               }}
             >
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
+              <h3>{projects[currentIndex].title}</h3>
+              <p>{projects[currentIndex].description}</p>
               
               <div className="tech-stack">
-                {project.tech.map((tech, i) => (
+                {projects[currentIndex].tech.map((tech, i) => (
                   <span key={i} className="tech-tag">{tech}</span>
                 ))}
               </div>
               
               <div className="project-links">
                 <motion.a
-                  href={project.github}
+                  href={projects[currentIndex].github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-link github"
+                  className="project-link github clickable"
+                  onClick={() => playSound('click')}
+                  onMouseEnter={() => playSound('hover')}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <span>💻</span> GitHub
                 </motion.a>
-                {project.demo && (
+                {projects[currentIndex].demo && (
                   <motion.a
-                    href={project.demo}
+                    href={projects[currentIndex].demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="project-link demo"
+                    className="project-link demo clickable"
+                    onClick={() => playSound('click')}
+                    onMouseEnter={() => playSound('hover')}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -100,7 +122,20 @@ function Projects() {
                 )}
               </div>
             </motion.div>
-          ))}
+          </AnimatePresence>
+
+          {/* Carousel Dots */}
+          <div className="carousel-dots">
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                className={`dot ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => goToSlide(index)}
+                onMouseEnter={() => playSound('hover')}
+                aria-label={`Go to project ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </motion.section>

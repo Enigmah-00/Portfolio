@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import useSound from '../hooks/useSound';
 import './Skills.css';
 
 function Skills() {
   const [hoveredSkill, setHoveredSkill] = useState(null);
+  const playSound = useSound();
 
   const skills = [
     { name: 'C / C++', level: 90, color: '#00a8cc' },
@@ -41,7 +43,10 @@ function Skills() {
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              onMouseEnter={() => setHoveredSkill(index)}
+              onMouseEnter={() => {
+                setHoveredSkill(index);
+                playSound('hover');
+              }}
               onMouseLeave={() => setHoveredSkill(null)}
               className={hoveredSkill === index ? 'hovered' : ''}
             >
