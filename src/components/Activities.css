@@ -1,0 +1,67 @@
+.activities-section {
+  background: rgba(26, 31, 58, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 60px 20px;
+  box-shadow: 0 10px 40px rgba(0, 255, 204, 0.1);
+}
+
+.activities-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #00ffcc;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+}
+
+.activity-card {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  background: rgba(12, 15, 28, 0.6);
+  border: 2px solid rgba(0, 255, 204, 0.3);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.activity-card p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #e0e0e0;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.activity-card .links {
+  display: flex;
+  justify-content: center;
+}
+
+.activity-card .links a {
+  padding: 12px 30px;
+  border: 2px solid #00ffcc;
+  color: #00ffcc;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+}
+
+.activity-card .links a:hover {
+  background: rgba(0, 255, 204, 0.2);
+}
+
+@media (max-width: 768px) {
+  .activities-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .activity-card {
+    padding: 20px;
+  }
+  
+  .activity-card p {
+    font-size: 1rem;
+  }
+}
