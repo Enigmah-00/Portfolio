@@ -20,6 +20,12 @@ function Activities() {
       color: '#48dbfb'
     },
     {
+      icon: '📚',
+      title: 'Creative Writing',
+      description: 'Wrote several poems, literature and science fiction as a former member of MAVOI ABRITI SONGSHOD',
+      color: '#ff6b6b'
+    },
+    {
       icon: '♟️',
       title: 'Chess Enthusiast',
       description: 'Apart from programming, I enjoy playing chess online to sharpen strategic thinking',

@@ -21,7 +21,15 @@ function Achievements() {
       highlight: true
     },
     {
-      icon: '🚀',
+      icon: '💻',
+      title: 'LU Inter-University Programming Contest',
+      description: 'Appeared in TechStorm presents LU Inter-University Junior Programming Contest as team SUST_Brute_force_believers',
+      color: '#a55eea',
+      link: true,
+      linkUrl: 'https://serious-oj.com/contest/67559b35a9f1c7000843e73f'
+    },
+    {
+      icon: '🛰️',
       title: 'NASA Space Apps Hackathon',
       description: 'Participated in the global NASA Space Apps Challenge hackathon',
       color: '#0B3D91',
@@ -91,6 +99,20 @@ function Achievements() {
                   whileTap={{ scale: 0.95 }}
                 >
                   📜 View Certificate
+                </motion.a>
+              )}
+              {achievement.link && (
+                <motion.a
+                  href={achievement.linkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="certificate-badge clickable"
+                  onClick={() => playSound('click')}
+                  onMouseEnter={() => playSound('hover')}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  🔗 View Contest
                 </motion.a>
               )}
             </motion.div>

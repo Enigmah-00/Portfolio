@@ -23,7 +23,7 @@ function Socials() {
     },
     {
       name: 'WhatsApp',
-      icon: '�',
+      icon: '💬',
       url: 'https://wa.me/8801964281241',
       color: '#25D366',
       description: 'Chat with me on WhatsApp'
