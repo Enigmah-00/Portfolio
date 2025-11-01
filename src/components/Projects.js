@@ -5,6 +5,8 @@ import './Projects.css';
 
 function Projects() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   const playSound = useSound();
 
   const projects = [
@@ -52,6 +54,40 @@ function Projects() {
     setCurrentIndex(index);
   };
 
+  // Minimum swipe distance (in px) to trigger slide change
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(0); // Reset touch end
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      // Swipe left - go to next slide
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
+      playSound('click');
+    }
+    
+    if (isRightSwipe) {
+      // Swipe right - go to previous slide
+      setCurrentIndex((prevIndex) => 
+        prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+      );
+      playSound('click');
+    }
+  };
+
   return (
     <motion.section 
       className="projects-section section" 
@@ -70,7 +106,12 @@ function Projects() {
           Projects
         </motion.h2>
         
-        <div className="carousel-container">
+        <div 
+          className="carousel-container"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={currentIndex}

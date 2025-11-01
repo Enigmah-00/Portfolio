@@ -21,6 +21,9 @@
   overflow: hidden;
   perspective: 1000px;
   min-height: 450px;
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .project-card {
