@@ -23,7 +23,7 @@ function Achievements() {
     {
       icon: '💻',
       title: 'LU Inter-University Programming Contest',
-      description: 'Appeared in TechStorm presents LU Inter-University Junior Programming Contest as team SUST_Brute_force_believers',
+      description: 'Secured 16th position in TechStorm presents LU Inter-University Junior Programming Contest as team SUST_Brute_force_believers',
       color: '#a55eea',
       link: true,
       linkUrl: 'https://serious-oj.com/contest/67559b35a9f1c7000843e73f'
