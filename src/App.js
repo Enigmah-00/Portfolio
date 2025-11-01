@@ -9,6 +9,7 @@ import Achievements from './components/Achievements';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Activities from './components/Activities';
+import Socials from './components/Socials';
 import Footer from './components/Footer';
 
 function App() {
@@ -401,6 +402,7 @@ function App() {
           <Projects />
           <Skills />
           <Activities />
+          <Socials />
           <Footer />
         </>
       )}

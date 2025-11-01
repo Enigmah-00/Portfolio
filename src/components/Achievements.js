@@ -14,6 +14,13 @@ function Achievements() {
       highlight: true
     },
     {
+      icon: '🏆',
+      title: 'Top 5 in CP Quiz',
+      description: 'Secured Top 5 position in Competitive Programming Quiz of SUST CSE 2021 Batch',
+      color: '#ffd700',
+      highlight: true
+    },
+    {
       icon: '🚀',
       title: 'NASA Space Apps Hackathon',
       description: 'Participated in the global NASA Space Apps Challenge hackathon',

@@ -13,7 +13,7 @@ function Navbar() {
       setScrolled(window.scrollY > 50);
       
       // Determine active section
-      const sections = ['about', 'stats', 'academic', 'achievements', 'projects', 'skills', 'cocurricular'];
+      const sections = ['about', 'stats', 'academic', 'achievements', 'projects', 'skills', 'cocurricular', 'socials'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -46,7 +46,7 @@ function Navbar() {
       transition={{ duration: 0.5 }}
     >
       <div className="nav-links">
-        {['about', 'stats', 'academic', 'achievements', 'projects', 'skills', 'cocurricular'].map((section) => (
+        {['about', 'stats', 'academic', 'achievements', 'projects', 'skills', 'cocurricular', 'socials'].map((section) => (
           <motion.button
             key={section}
             className={`nav-link ${activeSection === section ? 'active' : ''}`}
