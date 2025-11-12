@@ -98,12 +98,12 @@ function Stats() {
               whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0, 255, 204, 0.3)", transition: { duration: 0.2 } }}
             >
               <div className="stat-icon">🏆</div>
-              <div className="stat-label">Rank</div>
+              <div className="stat-label">Max Rank</div>
               <div 
                 className="stat-value" 
-                style={{ color: getRankColor(cfData.rank) }}
+                style={{ color: getRankColor(cfData.maxRank) }}
               >
-                {cfData.rank?.toUpperCase() || 'N/A'}
+                {cfData.maxRank?.toUpperCase() || 'N/A'}
               </div>
             </motion.div>
 
