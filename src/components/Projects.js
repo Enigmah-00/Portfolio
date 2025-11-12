@@ -11,6 +11,13 @@ function Projects() {
 
   const projects = [
     {
+      title: 'OS Simulator',
+      description: 'Interactive Operating System algorithms simulator built with Vite framework. Visualizes and demonstrates various OS scheduling and memory management algorithms.',
+      tech: ['Vite', 'JavaScript', 'OS Algorithms', 'Simulation'],
+      github: 'https://github.com/Enigmah-00/Portfolio',
+      demo: 'https://os-simulator-brown.vercel.app/'
+    },
+    {
       title: 'ScanShot',
       description: 'OCR + OMR Android application built with Kotlin and ML Kit. Detects and evaluates MCQ sheets and text in real-time.',
       tech: ['Kotlin', 'ML Kit', 'OCR', 'OMR', 'Android'],
