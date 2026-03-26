@@ -3,6 +3,7 @@
   min-height: 100vh;
   will-change: opacity, transform;
   backface-visibility: hidden;
+  padding-top: 80px;
 }
 
 .App::before {

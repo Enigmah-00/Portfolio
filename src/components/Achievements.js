@@ -43,6 +43,15 @@ function Achievements() {
       color: '#0082E6',
       certificate: true,
       certificateLink: '/Ericsson.pdf'
+    },
+    {
+      icon: '🎯',
+      title: 'ICPC Preliminary Contest 2025',
+      description: '110th position among 1717 teams at ICPC Preliminary Contest 2025 as Team_NamChilonaNamChilona',
+      color: '#e74c3c',
+      highlight: true,
+      link: true,
+      linkUrl: 'https://icpc.bubt.edu.bd/standing.php'
     }
   ];
 

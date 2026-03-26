@@ -15,7 +15,9 @@ function Skills() {
     { name: 'Python', color: '#feca57', icon: '🐍' },
     { name: 'Prompt Engineering', color: '#1dd1a1', icon: '🤖' },
     { name: 'Web Development', color: '#ff9ff3', icon: '💻' },
-    { name: 'Managing Skill', color: '#00ffcc', icon: '👔' }
+    { name: 'Managing Skill', color: '#00ffcc', icon: '👔' },
+    { name: 'Unity / C#', color: '#ffffff', icon: '🎮' },
+    { name: 'Deep Learning', color: '#ff6348', icon: '🧠' }
   ];
 
   return (

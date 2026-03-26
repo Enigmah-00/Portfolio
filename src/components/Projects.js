@@ -44,6 +44,13 @@ function Projects() {
       tech: ['React', 'NASA API', 'Space Tech'],
       github: 'https://github.com/niloy200119/Nasa_SpaceChallenge_2025',
       demo: 'https://nasa-space-challenge-2025.vercel.app/'
+    },
+    {
+      title: 'APA Simulator',
+      description: 'Interactive Unity game simulator featuring engaging gameplay mechanics and immersive experience.',
+      tech: ['Unity', 'C#', 'Game Dev'],
+      github: 'https://github.com/Enigmah-00/APA_Simulator/tree/main',
+      demo: 'https://enigmah-00.itch.io/apa-simulator'
     }
   ];
 
