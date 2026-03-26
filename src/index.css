@@ -4,29 +4,62 @@
   padding: 0;
 }
 
+:root {
+  --bg-base: #0c0f1c;
+  --bg-pattern: #0c0f1c;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #888888;
+  --accent: #00ffcc;
+  --accent-rgb: 0, 255, 204;
+  --accent-hover: #00ddaa;
+  --surface-primary: rgba(12, 15, 28, 0.8);
+  --surface-secondary: rgba(26, 31, 58, 0.66);
+  --surface-strong: rgba(12, 15, 28, 0.92);
+  --border-accent: rgba(0, 255, 204, 0.3);
+  --glow-soft: rgba(0, 255, 204, 0.12);
+  --unity-skill-color: #ffffff;
+  --unity-skill-rgb: 255, 255, 255;
+}
+
+[data-theme='light'] {
+  --bg-base: #f6f8ff;
+  --bg-pattern: #e8edff;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --accent: #16a34a;
+  --accent-rgb: 22, 163, 74;
+  --accent-hover: #15803d;
+  --surface-primary: rgba(255, 255, 255, 0.88);
+  --surface-secondary: rgba(255, 255, 255, 0.95);
+  --surface-strong: rgba(255, 255, 255, 0.98);
+  --border-accent: rgba(22, 163, 74, 0.28);
+  --glow-soft: rgba(22, 163, 74, 0.1);
+  --unity-skill-color: #000000;
+  --unity-skill-rgb: 0, 0, 0;
+}
+
 html {
   scroll-padding-top: 80px;
 }
 
 body {
   font-family: 'Courier New', monospace;
-  background: #0c0f1c;
+  background: var(--bg-base);
   background-image: 
-    linear-gradient(45deg, #0c0f1c 25%, transparent 25%),
-    linear-gradient(-45deg, #0c0f1c 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #0c0f1c 75%),
-    linear-gradient(-45deg, transparent 75%, #0c0f1c 75%);
+    linear-gradient(45deg, var(--bg-pattern) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--bg-pattern) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--bg-pattern) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--bg-pattern) 75%);
   background-size: 20px 20px;
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  color: #ffffff;
+  color: var(--text-primary);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Performance optimizations */
   will-change: scroll-position;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 code {
@@ -38,14 +71,99 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0c0f1c;
+  background: var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00ffcc;
+  background: var(--accent);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00ddaa;
+  background: var(--accent-hover);
+}
+
+[data-theme='light'] #bgVideo {
+  opacity: 0.08;
+  filter: saturate(1.05) brightness(1.05);
+}
+
+[data-theme='light'] .stats-section,
+[data-theme='light'] .academic-section,
+[data-theme='light'] .achievements-section,
+[data-theme='light'] .projects-section,
+[data-theme='light'] .skills-section,
+[data-theme='light'] .activities-section,
+[data-theme='light'] .socials-section,
+[data-theme='light'] .footer {
+  background: var(--surface-primary);
+  border-color: var(--border-accent);
+  box-shadow: 0 10px 35px var(--glow-soft);
+}
+
+[data-theme='light'] .stat-card,
+[data-theme='light'] .academic-card,
+[data-theme='light'] .achievement-card,
+[data-theme='light'] .project-card,
+[data-theme='light'] .skill-box,
+[data-theme='light'] .activity-card,
+[data-theme='light'] .social-card {
+  background: var(--surface-secondary);
+  border-color: var(--border-accent);
+}
+
+[data-theme='light'] .bio h1,
+[data-theme='light'] .stats-section h2,
+[data-theme='light'] .academic-section h2,
+[data-theme='light'] .achievements-section h2,
+[data-theme='light'] .projects-section h2,
+[data-theme='light'] .skills-section h2,
+[data-theme='light'] .activities-section h2,
+[data-theme='light'] .socials-section h2,
+[data-theme='light'] .project-card h3,
+[data-theme='light'] .achievement-card h3,
+[data-theme='light'] .stat-value,
+[data-theme='light'] .academic-card h3,
+[data-theme='light'] .detail-item .cgpa {
+  color: var(--accent);
+  text-shadow: none;
+}
+
+[data-theme='light'] .bio p,
+[data-theme='light'] .project-card p,
+[data-theme='light'] .achievement-card p,
+[data-theme='light'] .activity-card p,
+[data-theme='light'] .social-card p,
+[data-theme='light'] .footer p,
+[data-theme='light'] .copyright,
+[data-theme='light'] .stat-label,
+[data-theme='light'] .detail-item .label,
+[data-theme='light'] .university {
+  color: var(--text-secondary);
+}
+
+[data-theme='light'] .detail-item .value {
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .profile-link,
+[data-theme='light'] .links a,
+[data-theme='light'] .project-link,
+[data-theme='light'] .activity-link,
+[data-theme='light'] .focus-tag,
+[data-theme='light'] .tech-tag,
+[data-theme='light'] .certificate-badge {
+  border-color: var(--border-accent);
+  color: var(--accent);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.18);
+}
+
+[data-theme='light'] .profile-link:hover,
+[data-theme='light'] .links a:hover,
+[data-theme='light'] .project-link:hover,
+[data-theme='light'] .activity-link:hover,
+[data-theme='light'] .focus-tag:hover,
+[data-theme='light'] .tech-tag:hover,
+[data-theme='light'] .certificate-badge:hover {
+  background: rgba(var(--accent-rgb), 0.14);
 }

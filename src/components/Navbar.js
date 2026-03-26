@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import useSound from '../hooks/useSound';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const playSound = useSound();
@@ -45,7 +45,8 @@ function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="nav-links">
+      <div className="nav-controls">
+        <div className="nav-links">
         {['about', 'stats', 'academic', 'achievements', 'projects', 'skills', 'cocurricular', 'socials'].map((section) => (
           <motion.button
             key={section}
@@ -60,6 +61,21 @@ function Navbar() {
              section.charAt(0).toUpperCase() + section.slice(1)}
           </motion.button>
         ))}
+        </div>
+
+        <motion.button
+          className="theme-toggle clickable"
+          onClick={() => {
+            playSound('click');
+            onToggleTheme();
+          }}
+          onMouseEnter={() => playSound('hover')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+        </motion.button>
       </div>
     </motion.nav>
   );

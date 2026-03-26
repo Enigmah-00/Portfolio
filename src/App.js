@@ -13,6 +13,10 @@ import Socials from './components/Socials';
 import Footer from './components/Footer';
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    return savedTheme || 'dark';
+  });
   const [showStartScreen, setShowStartScreen] = useState(true);
   const [loading, setLoading] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -219,6 +223,15 @@ function App() {
   }, [showStartScreen, loading]);
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('portfolio-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((previousTheme) => (previousTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  useEffect(() => {
     // Add click sound to all interactive elements
     const handleClick = (e) => {
       if (e.target.closest('a, button, .clickable')) {
@@ -394,7 +407,7 @@ function App() {
             <source src="https://cdn.pixabay.com/video/2022/11/15/139255-770961038_large.mp4" type="video/mp4" />
           </video>
           
-          <Navbar />
+          <Navbar theme={theme} onToggleTheme={toggleTheme} />
           <Hero />
           <Stats />
           <Academic />

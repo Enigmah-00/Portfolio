@@ -53,17 +53,26 @@ function Skills() {
               onMouseLeave={() => setHoveredSkill(null)}
               whileHover={{ 
                 scale: 1.05,
-                boxShadow: `0 10px 40px ${skill.color}60`,
+                boxShadow: skill.name === 'Unity / C#'
+                  ? '0 10px 40px rgba(var(--unity-skill-rgb), 0.38)'
+                  : `0 10px 40px ${skill.color}60`,
                 transition: { duration: 0.2 }
               }}
               whileTap={{ scale: 0.95 }}
               style={{
-                borderColor: skill.color,
-                background: `linear-gradient(135deg, ${skill.color}15, transparent)`
+                borderColor: skill.name === 'Unity / C#'
+                  ? 'rgba(var(--unity-skill-rgb), 0.75)'
+                  : skill.color,
+                background: skill.name === 'Unity / C#'
+                  ? 'linear-gradient(135deg, rgba(var(--unity-skill-rgb), 0.12), transparent)'
+                  : `linear-gradient(135deg, ${skill.color}15, transparent)`
               }}
             >
               <span className="skill-icon">{skill.icon}</span>
-              <span className="skill-name" style={{ color: skill.color }}>
+              <span
+                className="skill-name"
+                style={{ color: skill.name === 'Unity / C#' ? 'var(--unity-skill-color)' : skill.color }}
+              >
                 {skill.name}
               </span>
             </motion.div>
