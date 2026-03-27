@@ -16,10 +16,15 @@
 
 .achievements-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, minmax(280px, 360px));
+  justify-content: center;
   gap: 30px;
-  max-width: 1200px;
+  max-width: 1140px;
   margin: 0 auto;
+}
+
+.achievements-grid .achievement-card:last-child {
+  grid-column: 2 / 3;
 }
 
 .achievement-card {
@@ -104,6 +109,10 @@
   .achievements-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .achievements-grid .achievement-card:last-child {
+    grid-column: auto;
   }
   
   .achievement-card {

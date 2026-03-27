@@ -52,6 +52,14 @@ function Achievements() {
       highlight: true,
       link: true,
       linkUrl: 'https://icpc.bubt.edu.bd/standing.php'
+    },
+    {
+      icon: '🎬',
+      title: 'GP Academy 2D Animation',
+      description: 'Learnt basic 2D animation from GP Academy.',
+      color: '#2ecc71',
+      certificate: true,
+      certificateLink: '/certificate-introduction-to-2d-animation.pdf'
     }
   ];
 
