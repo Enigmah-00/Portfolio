@@ -64,6 +64,18 @@
   transition: transform 0.3s ease;
 }
 
+.skill-icon-svg {
+  width: 2.8rem;
+  height: 2.8rem;
+  display: block;
+}
+
+.skill-icon-ann {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .skill-box:hover .skill-icon {
   transform: scale(1.2) rotate(5deg);
 }
@@ -98,6 +110,11 @@
 
   .skill-icon {
     font-size: 2.5rem;
+  }
+
+  .skill-icon-svg {
+    width: 2.3rem;
+    height: 2.3rem;
   }
   
   .skill-name {

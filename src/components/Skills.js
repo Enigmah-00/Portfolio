@@ -17,8 +17,41 @@ function Skills() {
     { name: 'Web Development', color: '#ff9ff3', icon: '💻' },
     { name: 'Managing Skill', color: '#00ffcc', icon: '👔' },
     { name: 'Unity / C#', color: '#ffffff', icon: '🎮' },
-    { name: 'Deep Learning', color: '#ff6348', icon: '🧠' }
+    { name: 'Deep Learning', color: '#ff6348', icon: 'ann' }
   ];
+
+  const renderSkillIcon = (skill) => {
+    if (skill.icon !== 'ann') {
+      return <span className="skill-icon">{skill.icon}</span>;
+    }
+
+    return (
+      <span className="skill-icon skill-icon-ann" aria-label="Artificial Neural Network icon">
+        <svg viewBox="0 0 64 64" className="skill-icon-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="16" y1="18" x2="32" y2="16" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="18" x2="32" y2="32" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="18" x2="32" y2="48" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="32" x2="32" y2="16" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="32" x2="32" y2="32" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="32" x2="32" y2="48" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="46" x2="32" y2="16" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="46" x2="32" y2="32" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="16" y1="46" x2="32" y2="48" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="32" y1="16" x2="48" y2="24" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="32" y1="32" x2="48" y2="24" stroke="currentColor" strokeWidth="2.2" />
+          <line x1="32" y1="48" x2="48" y2="24" stroke="currentColor" strokeWidth="2.2" />
+
+          <circle cx="16" cy="18" r="3.8" fill="currentColor" />
+          <circle cx="16" cy="32" r="3.8" fill="currentColor" />
+          <circle cx="16" cy="46" r="3.8" fill="currentColor" />
+          <circle cx="32" cy="16" r="3.8" fill="currentColor" />
+          <circle cx="32" cy="32" r="3.8" fill="currentColor" />
+          <circle cx="32" cy="48" r="3.8" fill="currentColor" />
+          <circle cx="48" cy="24" r="4.4" fill="currentColor" />
+        </svg>
+      </span>
+    );
+  };
 
   return (
     <motion.section 
@@ -68,7 +101,7 @@ function Skills() {
                   : `linear-gradient(135deg, ${skill.color}15, transparent)`
               }}
             >
-              <span className="skill-icon">{skill.icon}</span>
+              {renderSkillIcon(skill)}
               <span
                 className="skill-name"
                 style={{ color: skill.name === 'Unity / C#' ? 'var(--unity-skill-color)' : skill.color }}
