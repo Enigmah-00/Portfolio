@@ -4,6 +4,16 @@ const useSound = () => {
   const audioContextRef = useRef(null);
   const audioFilesRef = useRef({});
 
+  const initAudioContext = useCallback(() => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioContextRef.current.state === 'suspended') {
+      audioContextRef.current.resume();
+    }
+    return audioContextRef.current;
+  }, []);
+
   const playSynthesizedSound = useCallback((soundName, audioContext) => {
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
@@ -44,41 +54,38 @@ const useSound = () => {
   const playSound = useCallback((soundName) => {
     try {
       // Try to load custom audio file first
-      const soundPath = `/sounds/${soundName}.mp3`;
+      const soundPath = soundName === 'hover' ? '/sounds/gta.mp3' : `/sounds/${soundName}.mp3`;
       
       if (!audioFilesRef.current[soundName]) {
         const audio = new Audio(soundPath);
-        audio.volume = 0.4;
-        
-        audio.play().then(() => {
-          audioFilesRef.current[soundName] = audio;
-        }).catch(() => {
+        audio.preload = 'auto';
+        audio.volume = soundName === 'hover' ? 0.65 : 0.4;
+        audioFilesRef.current[soundName] = audio;
+
+        audio.play().catch(() => {
           // File doesn't exist, use synthesized sound
-          if (!audioContextRef.current) {
-            audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-          }
-          if (audioContextRef.current.state === 'suspended') {
-            audioContextRef.current.resume();
-          }
-          playSynthesizedSound(soundName, audioContextRef.current);
+          playSynthesizedSound(soundName, initAudioContext());
         });
       } else {
         const audio = audioFilesRef.current[soundName];
-        audio.currentTime = 0;
-        audio.play().catch(() => {
-          if (!audioContextRef.current) {
-            audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-          }
-          if (audioContextRef.current.state === 'suspended') {
-            audioContextRef.current.resume();
-          }
-          playSynthesizedSound(soundName, audioContextRef.current);
-        });
+
+        if (soundName === 'hover') {
+          const hoverInstance = audio.cloneNode();
+          hoverInstance.volume = 0.65;
+          hoverInstance.play().catch(() => {
+            playSynthesizedSound(soundName, initAudioContext());
+          });
+        } else {
+          audio.currentTime = 0;
+          audio.play().catch(() => {
+            playSynthesizedSound(soundName, initAudioContext());
+          });
+        }
       }
     } catch (error) {
       console.log('Sound error:', error);
     }
-  }, [playSynthesizedSound]);
+  }, [initAudioContext, playSynthesizedSound]);
 
   return playSound;
 };

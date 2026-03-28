@@ -23,7 +23,7 @@ function App() {
   const [loadingText, setLoadingText] = useState('Initializing...');
   const [hacked, setHacked] = useState(false);
   const audioContextRef = useRef(null);
-  const soundsPlayedRef = useRef(false);
+  const loadingAudioRef = useRef(null);
 
   // Initialize audio context
   const initAudio = useCallback(() => {
@@ -36,71 +36,12 @@ function App() {
     return audioContextRef.current;
   }, []);
 
-  // Play 8-bit mission success sound
-  const playSuccessSound = useCallback(() => {
-    try {
-      const audioContext = initAudio();
-
-      // Mission complete fanfare - classic game victory sound
-      const successMelody = [
-        { freq: 523.25, time: 0, duration: 0.15 },     // C5
-        { freq: 659.25, time: 0.15, duration: 0.15 },  // E5
-        { freq: 783.99, time: 0.3, duration: 0.15 },   // G5
-        { freq: 1046.50, time: 0.45, duration: 0.2 },  // C6
-        { freq: 783.99, time: 0.65, duration: 0.1 },   // G5
-        { freq: 1046.50, time: 0.75, duration: 0.4 }   // C6 (held)
-      ];
-
-      successMelody.forEach(note => {
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-        
-        osc.type = 'square';
-        osc.frequency.value = note.freq;
-        gain.gain.setValueAtTime(0.25, audioContext.currentTime + note.time);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + note.time + note.duration);
-        
-        osc.start(audioContext.currentTime + note.time);
-        osc.stop(audioContext.currentTime + note.time + note.duration);
-      });
-    } catch (error) {
-      console.log('Audio error:', error);
-    }
-  }, [initAudio]);
-
-  // Play startup beep
-  const playStartupBeep = useCallback(() => {
-    try {
-      const audioContext = initAudio();
-      
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-      
-      osc.type = 'square';
-      osc.frequency.value = 880;
-      gain.gain.setValueAtTime(0.15, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-      
-      osc.start(audioContext.currentTime);
-      osc.stop(audioContext.currentTime + 0.2);
-    } catch (error) {
-      console.log('Audio error:', error);
-    }
-  }, [initAudio]);
-
   const startHacking = () => {
     if (loading || !showStartScreen) {
       return;
     }
 
     initAudio();
-    soundsPlayedRef.current = false;
     setLoadingProgress(0);
     setLoadingText('Initializing...');
     setHacked(false);
@@ -121,45 +62,32 @@ function App() {
       'Accessing mainframe...',
       'Decrypting data...',
       'Loading profile...',
-      'Almost there...'
+      'Ah,Shit! Here we go again!'
     ];
 
     setLoadingProgress(0);
     setLoadingText(messages[0]);
     setHacked(false);
 
-    let progress = 0;
     let messageIndex = 0;
-    let completionTimeout;
+    const loadingDurationMs = 10000;
+    const loadingStartTime = Date.now();
 
-    const startupTimeout = setTimeout(() => playStartupBeep(), 400);
+    if (!loadingAudioRef.current) {
+      loadingAudioRef.current = new Audio('/sounds/gta_san_andreas.mp3');
+      loadingAudioRef.current.preload = 'auto';
+      loadingAudioRef.current.loop = true;
+      loadingAudioRef.current.volume = 0.45;
+    }
 
-    const soundInterval = setInterval(() => {
-      if (progress < 100) {
-        try {
-          const audioContext = initAudio();
-          const osc = audioContext.createOscillator();
-          const gain = audioContext.createGain();
-
-          osc.connect(gain);
-          gain.connect(audioContext.destination);
-
-          osc.type = 'square';
-          osc.frequency.value = 523.25 + Math.random() * 200;
-          gain.gain.setValueAtTime(0.08, audioContext.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
-
-          osc.start(audioContext.currentTime);
-          osc.stop(audioContext.currentTime + 0.08);
-        } catch (error) {
-          console.log('Audio error:', error);
-        }
-      }
-    }, 600);
+    loadingAudioRef.current.currentTime = 0;
+    loadingAudioRef.current.play().catch((error) => {
+      console.log('Loading audio play failed:', error);
+    });
 
     const progressInterval = setInterval(() => {
-      progress += Math.random() * 15;
-      if (progress > 100) progress = 100;
+      const elapsed = Date.now() - loadingStartTime;
+      const progress = Math.min(100, (elapsed / loadingDurationMs) * 100);
       setLoadingProgress(progress);
 
       if (
@@ -172,29 +100,25 @@ function App() {
 
       if (progress >= 100) {
         clearInterval(progressInterval);
-        clearInterval(soundInterval);
         setHacked(true);
 
-        if (!soundsPlayedRef.current) {
-          soundsPlayedRef.current = true;
-          playSuccessSound();
+        if (loadingAudioRef.current) {
+          loadingAudioRef.current.pause();
+          loadingAudioRef.current.currentTime = 0;
         }
 
-        completionTimeout = setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
       }
     }, 200);
 
     return () => {
       clearInterval(progressInterval);
-      clearInterval(soundInterval);
-      clearTimeout(startupTimeout);
-      if (completionTimeout) {
-        clearTimeout(completionTimeout);
+      if (loadingAudioRef.current) {
+        loadingAudioRef.current.pause();
+        loadingAudioRef.current.currentTime = 0;
       }
     };
-  }, [loading, initAudio, playStartupBeep, playSuccessSound]);
+  }, [loading]);
 
   // Click sound effect
   const playClickSound = () => {
@@ -230,6 +154,12 @@ function App() {
   const toggleTheme = () => {
     setTheme((previousTheme) => (previousTheme === 'dark' ? 'light' : 'dark'));
   };
+
+  const loadingVisualSource = loadingProgress < 30
+    ? '/Coding.png'
+    : loadingProgress < 60
+      ? '/gaming.png'
+      : '/AI.png';
 
   useEffect(() => {
     // Add click sound to all interactive elements
@@ -316,6 +246,19 @@ function App() {
               >
                 <div className="laptop-screen">
                   <div className="laptop-camera"></div>
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={loadingVisualSource}
+                      src={loadingVisualSource}
+                      alt="Loading visual"
+                      className="loading-screen-visual"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.45 }}
+                    />
+                  </AnimatePresence>
+
                   <div className="laptop-content">
                     <motion.div 
                       className="hacking-header"
@@ -325,24 +268,6 @@ function App() {
                     >
                       <div className="terminal-text">root@portfolio:~#</div>
                     </motion.div>
-
-                    <motion.h1 
-                      className="hacking-name"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                    >
-                      {Array.from("MAHDI HASAN QURISHI").map((char, index) => (
-                        <motion.span
-                          key={index}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.1, delay: 0.5 + index * 0.05 }}
-                        >
-                          {char}
-                        </motion.span>
-                      ))}
-                    </motion.h1>
 
                     <motion.div 
                       className="loading-bar-container"
@@ -375,7 +300,7 @@ function App() {
                           animate={{ scale: 1, opacity: 1 }}
                           className="hacked-message"
                         >
-                          <span className="success-icon">✓</span> HACKED SUCCESSFULLY
+                          <span className="success-icon">✓</span> Ah,shit, here we go again
                         </motion.div>
                       )}
                     </motion.div>
