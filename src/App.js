@@ -62,7 +62,7 @@ function App() {
       'Accessing mainframe...',
       'Decrypting data...',
       'Loading profile...',
-      'Ah,Shit! Here we go again!'
+      'Hacked successfully'
     ];
 
     setLoadingProgress(0);
@@ -156,10 +156,10 @@ function App() {
   };
 
   const loadingVisualSource = loadingProgress < 30
-    ? '/Coding.png'
+    ? '/Coding-optimized.webp'
     : loadingProgress < 60
-      ? '/gaming.png'
-      : '/AI.png';
+      ? '/gaming-optimized.webp'
+      : '/AI-optimized.webp';
 
   useEffect(() => {
     // Add click sound to all interactive elements
@@ -300,7 +300,7 @@ function App() {
                           animate={{ scale: 1, opacity: 1 }}
                           className="hacked-message"
                         >
-                          <span className="success-icon">✓</span> Ah,shit, here we go again
+                          <span className="success-icon">✓</span> Hacked successfully
                         </motion.div>
                       )}
                     </motion.div>

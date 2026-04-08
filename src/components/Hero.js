@@ -47,7 +47,12 @@ function Hero() {
           whileHover={{ scale: 1.05, rotate: 5 }}
           transition={{ duration: 0.3 }}
         >
-          <img src="/images/ChatGPT Image Jul 18, 2025, 01_41_32 PM.png" alt="Mahdi Hasan Qurishi" />
+          <img
+            src="/images/profile-optimized.webp"
+            alt="Mahdi Hasan Qurishi"
+            decoding="async"
+            fetchpriority="high"
+          />
         </motion.div>
         
         <motion.div className="bio" variants={itemVariants}>
